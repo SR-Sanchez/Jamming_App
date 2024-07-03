@@ -17,7 +17,7 @@ const SearchBar = () => {
 
 	return (
 		<>
-			<input placeholder="Search for a song" value={searchTerm} onChange={handleTermSearch}></input>
+			<input value={searchTerm} onChange={handleTermSearch}></input>
 			<button onClick={handleSubmit}>Search</button>
 		</>
 	);
