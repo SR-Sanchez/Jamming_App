@@ -1,15 +1,12 @@
-// import { useState } from "react";
+import "./SearchResults.css";
+import TrackList from "../Tracklist/Tracklist";
 
 const SearchResults = () => {
 
 	return (
-		<div className="SearchResults">
-			<h2>Results</h2>
-			<ul>
-				<li>Track 1</li>
-				<li>Track result 2</li>
-				<li>Track result 3</li>
-			</ul>
+		<div className="results-container">
+				<h2>Results</h2>
+				<TrackList/>
 		</div>
 	);
 };

@@ -1,5 +1,5 @@
-// import React from "react";
 import { useState } from "react";
+import "./SearchBar.css"
 
 const SearchBar = () => {
 	const [searchTerm, setSearchTerm] = useState("");
@@ -17,8 +17,10 @@ const SearchBar = () => {
 
 	return (
 		<>
-			<input value={searchTerm} onChange={handleTermSearch}></input>
-			<button onClick={handleSubmit}>Search</button>
+			<section id="search">
+				<input value={searchTerm} onChange={handleTermSearch}></input>
+				<button onClick={handleSubmit}>SEARCH</button>
+			</section>			
 		</>
 	);
 };

@@ -1,0 +1,30 @@
+#search {
+	max-width: 240px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 88px;
+	margin-bottom: 64px;
+	text-align: center;
+	height: 92px;
+}
+
+input {
+	width: 100%;
+	text-align: center;
+	padding: 8px;
+	font-weight: 400;
+}
+
+button {
+	border-radius: 76px;
+	border-style: hidden;
+	padding-left: 16px;
+	padding-right: 16px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	margin-top: 28px;
+	background-color: #9d99e1;
+	font-weight: 600;
+	/* min-width: 100px; */
+	color: rgb(56, 47, 85)
+}
