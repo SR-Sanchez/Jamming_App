@@ -22,7 +22,7 @@ body, :root {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
   /* font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
-  background-image: url(../public/Images/background2.jpg);
+  background-image: url(/Images/background2.jpg);
 	background-position: center;
 	background-repeat: repeat;
 	background-size: cover;

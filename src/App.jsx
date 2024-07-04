@@ -1,4 +1,5 @@
 import './App.css'
+import Playlist from './components/Playlist/Playlist';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
 
@@ -10,6 +11,7 @@ function App() {
       <SearchBar></SearchBar>
       <section id="main-container">
         <SearchResults/>
+        <Playlist/>
       </section>
     </>
   )
