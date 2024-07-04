@@ -1,0 +1,8 @@
+.track {
+	margin-top: 4px;
+	border-style: none none solid none;
+	border-width: 2px;
+	border-color: rgb(131, 125, 143);
+	display: flex;
+	justify-content: space-between;
+}

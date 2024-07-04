@@ -13,38 +13,3 @@
 	color:rgb(245, 245, 246)
 }
 
-.track {
-	margin-top: 4px;
-	border-style: none none solid none;
-	border-width: 2px;
-	border-color: rgb(131, 125, 143);
-	display: flex;
-	justify-content: space-between;
-}
-
-.trackName {
-	font-size: 16px;
-	font-weight:500;
-	margin: 0;
-}
-
-.artist {
-	margin-top: 0;
-	font-size: 16px;
-	font-weight: 300;
-	color:rgb(180, 172, 202);
-}
-
-#trackButton {
-	font-size: 16px;
-	font-weight:500;
-	margin: 0;
-	padding: 0;
-	text-align: right;
-	background: transparent;
-	color:rgb(206, 200, 224);
-	width: 4%;
-	position: relative;
-	bottom: 4px
-}
-
