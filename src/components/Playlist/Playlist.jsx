@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import './Playlist.css'
-import Track from "../Track/Track";
+import TrackList from "../Tracklist/Tracklist";
 
 const Playlist = (props) => {
 
@@ -19,15 +19,7 @@ const Playlist = (props) => {
 	return (
 		<div className="playlist">
 			<input value={playlistName} onClick={handleSelect} onChange={handlePlaylistName}></input>
-			{props.searchResults.items.map((song) => {
-				return(
-					<Track
-						track={song.name}
-						artist={song.artists[0].name}
-						display={true}
-					/>
-				)
-			})}
+				<TrackList searchResults={props.searchResults} display={false}/>
 			<button id="saveButton">SAVE TO SPOTIFY</button>
 		</div>
 	);

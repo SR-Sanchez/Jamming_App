@@ -1,14 +1,13 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react/prop-types */
 import Track from "../Track/Track";
-import "./Tracklist.css"
 
 
 
 
 const TrackList = (props) => {
 	return (
-		<div className="TrackList">
+		<>
 			{props.searchResults.items.map((song) => {
 				return(
 					<Track
@@ -18,7 +17,7 @@ const TrackList = (props) => {
 					/>
 				)
 			})}
-		</div>
+		</>
 	);
 };
 
