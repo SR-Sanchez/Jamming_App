@@ -14,6 +14,7 @@ const TrackList = (props) => {
 					<Track
 						track={song.name}
 						artist={song.artists[0].name}
+						display={true}
 					/>
 				)
 			})}

@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import './Playlist.css'
 import Track from "../Track/Track";
 
-const Playlist = () => {
+const Playlist = (props) => {
 
 	const [playlistName, setPlaylistName] = useState("New Playlist");
 
@@ -17,7 +19,15 @@ const Playlist = () => {
 	return (
 		<div className="playlist">
 			<input value={playlistName} onClick={handleSelect} onChange={handlePlaylistName}></input>
-			<Track/>
+			{props.searchResults.items.map((song) => {
+				return(
+					<Track
+						track={song.name}
+						artist={song.artists[0].name}
+						display={false}
+					/>
+				)
+			})}
 			<button id="saveButton">SAVE TO SPOTIFY</button>
 		</div>
 	);
