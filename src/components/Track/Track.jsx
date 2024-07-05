@@ -4,9 +4,13 @@ import { useState } from "react";
 
 const Track = (props) => {
 
-	
+	const [songDisplay, setSongDisplay] = useState(props.display)
 
-	if(props.display) {
+	const handleClick = () => {
+		setSongDisplay(false)
+	}
+
+	if(songDisplay) { //if props passed as true or displayState is true
 		return (
 			<div>
 				<article className="track">
@@ -14,7 +18,7 @@ const Track = (props) => {
 						<p className="trackName">{props.track}</p>
 						<p className="artist">{props.artist}</p>
 					</div>
-					<button id="trackButton">+</button>
+					<button id="trackButton" onClick={handleClick}>+</button>
 				</article>
 			</div>
 		);

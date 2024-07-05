@@ -13,7 +13,7 @@ function App() {
       <header> <h1>Ja<span id="ms">mmm</span>ing</h1> </header>
       <SearchBar></SearchBar>
       <section id="main-container">
-        <SearchResults searchResults={searchResults}/>
+        <SearchResults searchResults={searchResults} display={false}/>
         <Playlist searchResults={searchResults}/>
       </section>
     </>
