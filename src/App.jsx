@@ -7,6 +7,10 @@ import data from "../../test.json"
 function App() {
 
   const searchResults = data.tracks;
+
+  searchResults.items.map((song) => {
+    song.display=1
+  })
   
   return (
     <>

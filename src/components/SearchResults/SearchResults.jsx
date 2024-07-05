@@ -10,7 +10,7 @@ const SearchResults = (props) => {
 	return (
 		<div className="results-container">
 				<h2>Results</h2>
-				<TrackList searchResults={props.searchResults} display={false}/>
+				<TrackList searchResults={props.searchResults}/>
 		</div>
 	);
 };

@@ -17,6 +17,7 @@ const Track = (props) => {
 					<div>
 						<p className="trackName">{props.track}</p>
 						<p className="artist">{props.artist}</p>
+						<p>{props.display}</p>
 					</div>
 					<button id="trackButton" onClick={handleClick}>+</button>
 				</article>

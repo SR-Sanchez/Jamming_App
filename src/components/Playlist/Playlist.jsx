@@ -19,7 +19,7 @@ const Playlist = (props) => {
 	return (
 		<div className="playlist">
 			<input value={playlistName} onClick={handleSelect} onChange={handlePlaylistName}></input>
-				<TrackList searchResults={props.searchResults} display={false}/>
+				<TrackList searchResults={props.searchResults}/>
 			<button id="saveButton">SAVE TO SPOTIFY</button>
 		</div>
 	);
