@@ -1,13 +1,25 @@
+/* eslint-disable react/jsx-key */
+/* eslint-disable react/prop-types */
 import Track from "../Track/Track";
 import "./Tracklist.css"
 
-const TrackList = () => {
 
+
+
+const TrackList = (props) => {
 	return (
 		<div className="TrackList">
-			<Track/>
+			{props.searchResults.items.map((song) => {
+				return(
+					<Track
+						track={song.name}
+						artist={song.artists[0].name}
+					/>
+				)
+			})}
 		</div>
 	);
 };
 
 export default TrackList;
+
