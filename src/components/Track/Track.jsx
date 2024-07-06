@@ -1,29 +1,19 @@
 /* eslint-disable react/prop-types */
 import "./Track.css"
-import { useState } from "react";
 
-const Track = (props) => {
-
-	const [songDisplay, setSongDisplay] = useState(props.display)
-
-	const handleClick = () => {
-		setSongDisplay(false)
-	}
-
-	if(songDisplay) { //if props passed as true or displayState is true
+const Track = ({track, artist, display}) => {
 		return (
 			<div>
 				<article className="track">
 					<div>
-						<p className="trackName">{props.track}</p>
-						<p className="artist">{props.artist}</p>
-						<p>{props.display}</p>
+						<p className="trackName">{track}</p>
+						<p className="artist">{artist}</p>
+						<p>{display}</p>
 					</div>
-					<button id="trackButton" onClick={handleClick}>+</button>
+					<button id="trackButton" >+</button>
 				</article>
 			</div>
 		);
-	}
 };
 
 export default Track;

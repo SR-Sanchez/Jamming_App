@@ -3,14 +3,14 @@ import "./SearchResults.css";
 import TrackList from "../Tracklist/Tracklist";
 
 
-const SearchResults = (props) => {
+const SearchResults = ({searchResults}) => {
 
 	
 
 	return (
 		<div className="results-container">
 				<h2>Results</h2>
-				<TrackList searchResults={props.searchResults}/>
+				<TrackList searchResults={searchResults}/>
 		</div>
 	);
 };

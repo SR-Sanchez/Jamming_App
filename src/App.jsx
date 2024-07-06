@@ -10,6 +10,14 @@ function App() {
 
   searchResults.items.map((song) => {
     song.display=1
+  });
+
+  const filteredArr = []
+
+  searchResults.items.map((item) => {
+    if(item.display === 1) {
+      filteredArr.push(item)
+    }
   })
   
   return (
@@ -18,7 +26,7 @@ function App() {
       <SearchBar></SearchBar>
       <section id="main-container">
         <SearchResults searchResults={searchResults} display={false}/>
-        <Playlist searchResults={searchResults}/>
+        <Playlist filteredArr={filteredArr}/>
       </section>
     </>
   )
