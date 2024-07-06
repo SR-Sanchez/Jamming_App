@@ -5,7 +5,7 @@ import Track from "../Track/Track";
 
 
 
-const TrackList = ({searchResults}) => {
+const TrackList = ({searchResults, addTrack}) => {
 	
 	// return (
 	// 	<>
@@ -28,6 +28,8 @@ const TrackList = ({searchResults}) => {
 						track={track}
 						name={track.name}
 						artist={track.artist}
+						id={track.id}
+						addTrack={addTrack}
 					/>
 				)
 			})}
