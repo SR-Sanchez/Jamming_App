@@ -25,7 +25,7 @@ const TrackList = ({searchResults, filteredArr}) => {
 	if(filteredArr) {
 		return (
 			<>
-				{filteredArr.map((song) => {
+				{filteredArr.items.map((song) => {
 					return(
 						<Track
 							track={song.name}
