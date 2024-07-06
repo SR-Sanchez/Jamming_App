@@ -10,7 +10,7 @@ const SearchResults = ({searchResults, addTrack}) => {
 	return (
 		<div className="results-container">
 				<h2>Results</h2>
-				<TrackList searchResults={searchResults} addTrack={addTrack}/>
+				<TrackList searchResults={searchResults} addTrack={addTrack} displayButton={true}/>
 		</div>
 	);
 };

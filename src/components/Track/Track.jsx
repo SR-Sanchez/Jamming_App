@@ -1,7 +1,16 @@
 /* eslint-disable react/prop-types */
 import "./Track.css"
 
-const Track = ({name, artist, addTrack, track}) => {
+const Track = ({name, artist, addTrack, track, displayButton}) => {
+
+	const display = () => {
+		if(displayButton) {
+			return "+"
+		} else {
+			return "-"
+		}
+	}
+
 		return (
 			<div>
 				<article className="track">
@@ -10,7 +19,7 @@ const Track = ({name, artist, addTrack, track}) => {
 						<p className="artist">{artist}</p>
 						<p></p>
 					</div>
-					<button id="trackButton" onClick={() => addTrack(track)}>+</button>
+					<button id="trackButton" onClick={() => addTrack(track)}>{display()}</button>
 				</article>
 			</div>
 		);
