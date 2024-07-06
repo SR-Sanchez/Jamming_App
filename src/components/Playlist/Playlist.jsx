@@ -19,7 +19,7 @@ const Playlist = ({filteredArr}) => {
 	return (
 		<div className="playlist">
 			<input value={playlistName} onClick={handleSelect} onChange={handlePlaylistName}></input>
-				<TrackList filteredArr={filteredArr}/>
+				<TrackList searchResults={filteredArr}/>
 			<button id="saveButton">SAVE TO SPOTIFY</button>
 		</div>
 	);

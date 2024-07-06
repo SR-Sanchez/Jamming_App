@@ -2,15 +2,14 @@ import './App.css'
 import Playlist from './components/Playlist/Playlist';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
-import test from "../../test.json";
-import data from "../../singleTrack.json"
+import results from './components/MockupDB/Mockup';
 
 function App() {
 
-  const searchResults = test.tracks;
+  const searchResults = results;
 
   
-  const filteredArr = data.tracks;
+  const filteredArr = results;
   
   return (
     <>

@@ -5,38 +5,34 @@ import Track from "../Track/Track";
 
 
 
-const TrackList = ({searchResults, filteredArr}) => {
+const TrackList = ({searchResults}) => {
 	
-	if(searchResults) {
-		return (
-			<>
-				{searchResults.items.map((song) => {
-					return(
-						<Track
-							track={song.name}
-							artist={song.artists[0].name}
-							display={song.display}
-						/>
-					)
-				})}
-			</>
-		);
-	}
-	if(filteredArr) {
-		return (
-			<>
-				{filteredArr.items.map((song) => {
-					return(
-						<Track
-							track={song.name}
-							artist={song.artists[0].name}
-							display={song.display}
-						/>
-					)
-				})}
-			</>
-		);
-	}
+	// return (
+	// 	<>
+	// 		{searchResults.items.map((song) => {
+	// 			return(
+	// 				<Track
+	// 					track={song.name}
+	// 					artist={song.artists[0].name}
+	// 					display={song.display}
+	// 				/>
+	// 			)
+	// 		})}
+	// 	</>
+	// );
+	return (
+		<>
+			{searchResults.map((track) => {
+				return(
+					<Track
+						track={track}
+						name={track.name}
+						artist={track.artist}
+					/>
+				)
+			})}
+		</>
+	);
 };
 
 export default TrackList;
