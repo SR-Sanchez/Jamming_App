@@ -4,7 +4,7 @@ import { useState } from "react";
 import './Playlist.css'
 import TrackList from "../Tracklist/Tracklist";
 
-const Playlist = ({filteredArr}) => {
+const Playlist = ({filteredArr, removeTrack}) => {
 
 	const [playlistName, setPlaylistName] = useState("New Playlist");
 
@@ -19,7 +19,7 @@ const Playlist = ({filteredArr}) => {
 	return (
 		<div className="playlist">
 			<input value={playlistName} onClick={handleSelect} onChange={handlePlaylistName}></input>
-				<TrackList searchResults={filteredArr}/>
+				<TrackList searchResults={filteredArr} removeTrack={removeTrack}/>
 			<button id="saveButton">SAVE TO SPOTIFY</button>
 		</div>
 	);

@@ -20,9 +20,9 @@ function App() {
   )
 
   const removeTrack = useCallback((track) => {
-    setFilteredArr((prevTracks) => 
+    setFilteredArr((prevTracks) => //will take the previous state (prevTracks), do a loop and for current track compare id. Filter the selected track by id
       prevTracks.filter((currentTrack) => currentTrack.id !== track.id))
-  })
+  }, []) //for a reason I don't quite understand, there's no need for dependencies
   
   return (
     <>
@@ -30,7 +30,7 @@ function App() {
       <SearchBar></SearchBar>
       <section id="main-container">
         <SearchResults searchResults={searchResults} addTrack={addTrack}/>
-        <Playlist filteredArr={filteredArr}/>
+        <Playlist filteredArr={filteredArr} removeTrack={removeTrack}/>
       </section>
     </>
   )

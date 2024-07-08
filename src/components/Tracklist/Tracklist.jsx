@@ -5,7 +5,7 @@ import Track from "../Track/Track";
 
 
 
-const TrackList = ({searchResults, addTrack, displayButton}) => {
+const TrackList = ({searchResults, addTrack, displayButton, removeTrack}) => {
 	
 	// return (
 	// 	<>
@@ -31,6 +31,7 @@ const TrackList = ({searchResults, addTrack, displayButton}) => {
 						id={track.id}
 						addTrack={addTrack}
 						displayButton={displayButton}
+						removeTrack={removeTrack}
 					/>
 				)
 			})}
