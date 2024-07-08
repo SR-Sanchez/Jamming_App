@@ -7,9 +7,21 @@ import { useState, useCallback } from 'react';
 
 function App() {
 
-  const searchResults = results;
+  // const searchResults = results;
 
-  const [playlistTracks, setplaylistTracks] = useState([])
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([])
+  const [playlistTracks, setplaylistTracks] = useState([]);
+
+	const handleTermSearch = event => {
+		setSearchTerm(event.target.value)
+	};
+
+	const handleSubmit = () => { //mockup function as prove of concept - needs to be changed
+    setSearchResults(results)
+  };
+
+  
 
   const addTrack = useCallback((track) => {
     if(playlistTracks.some((savedTrack) => savedTrack.id === track.id)){ //returns true if a track is already in the array
@@ -27,7 +39,7 @@ function App() {
   return (
     <>
       <header> <h1>Ja<span id="ms">mmm</span>ing</h1> </header>
-      <SearchBar></SearchBar>
+      <SearchBar searchTerm={searchTerm} handleTermSearch={handleTermSearch} handleSubmit={handleSubmit}></SearchBar>
       <section id="main-container">
         <SearchResults tracks={searchResults} addTrack={addTrack}/>
         <Playlist tracks={playlistTracks} removeTrack={removeTrack}/>
