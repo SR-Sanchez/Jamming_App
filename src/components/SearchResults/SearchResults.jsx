@@ -3,14 +3,14 @@ import "./SearchResults.css";
 import TrackList from "../Tracklist/Tracklist";
 
 
-const SearchResults = ({searchResults, addTrack}) => {
+const SearchResults = ({tracks, addTrack}) => {
 
 	
 
 	return (
 		<div className="results-container">
 				<h2>Results</h2>
-				<TrackList searchResults={searchResults} addTrack={addTrack} displayButton={true}/>
+				<TrackList tracks={tracks} addTrack={addTrack} displayButton={true}/>
 		</div>
 	);
 };
