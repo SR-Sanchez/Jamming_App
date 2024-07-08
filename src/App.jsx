@@ -2,7 +2,7 @@ import './App.css'
 import Playlist from './components/Playlist/Playlist';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
-import spotify from './util/Spotify';
+import Spotify from './util/Spotify';
 import { useState, useCallback } from 'react';
 
 function App() {
@@ -15,8 +15,9 @@ function App() {
 		setSearchTerm(event.target.value)
 	};
 
-	const handleSubmit = () => { //mockup function as prove of concept - needs to be changed
-    spotify().then(setSearchResults) //still don't quite understand the .then here. Need to study it more.
+  const handleSubmit = () => { 
+    Spotify.search(searchTerm).then(setSearchResults); //still don't quite understand the .then here. Need to study it more.
+    setSearchTerm("")
   };
 
   
