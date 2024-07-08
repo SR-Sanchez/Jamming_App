@@ -11,6 +11,10 @@ const Track = ({name, artist, addTrack, track, displayButton}) => {
 		}
 	}
 
+	// const addOrRemove = () => {
+
+	// }
+
 		return (
 			<div>
 				<article className="track">
