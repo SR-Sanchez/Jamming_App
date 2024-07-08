@@ -2,12 +2,10 @@ import './App.css'
 import Playlist from './components/Playlist/Playlist';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
-import results from './components/MockupDB/Mockup';
+import spotify from './util/Spotify';
 import { useState, useCallback } from 'react';
 
 function App() {
-
-  // const searchResults = results;
 
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([])
@@ -18,7 +16,7 @@ function App() {
 	};
 
 	const handleSubmit = () => { //mockup function as prove of concept - needs to be changed
-    setSearchResults(results)
+    spotify().then(setSearchResults) //still don't quite understand the .then here. Need to study it more.
   };
 
   
