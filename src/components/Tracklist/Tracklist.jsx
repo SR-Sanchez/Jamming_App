@@ -20,24 +20,26 @@ const TrackList = ({tracks, addTrack, displayButton, removeTrack}) => {
 	// 		})}
 	// 	</>
 	// );
-	return (
-		<>
-			{tracks.map((track) => {
-				return(
-					<Track
-						track={track}
-						name={track.name}
-						artist={track.artist}
-						key={track.id}
-						id={track.id}
-						addTrack={addTrack}
-						displayButton={displayButton}
-						removeTrack={removeTrack}
-					/>
-				)
-			})}
-		</>
-	);
+	if(tracks) {
+		return (
+			<>
+				{tracks.map((track) => {
+					return(
+						<Track
+							track={track}
+							name={track.name}
+							artist={track.artist}
+							key={track.id}
+							id={track.id}
+							addTrack={addTrack}
+							displayButton={displayButton}
+							removeTrack={removeTrack}
+						/>
+					)
+				})}
+			</>
+		);
+	}
 };
 
 export default TrackList;

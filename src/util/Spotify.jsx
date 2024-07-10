@@ -42,72 +42,76 @@ const Spotify = {
     }
 
     authUrl.search = new URLSearchParams(params).toString();
-    window.location.href = authUrl.toString();
-
-    // const urlParams = new URLSearchParams(window.location.search);
-    // let code = urlParams.get('code');
-    // window.localStorage.setItem('code', code)
+    window.location.href = authUrl.toString(); //If I'm not mistaken, this two lines a. create a new URL and b. set the link to the link + response params (code)
   },
 
 
   async getToken() {
-    const codeVerifier = localStorage.getItem('code_verifier')
-    if(!codeVerifier){
-      await Spotify.authorization()
+    if(localStorage.getItem('access_token')) {
+      return;
+    } else {
+      const codeVerifier = localStorage.getItem('code_verifier') 
+    
+      // stored in the previous step
+      const code = window.location.href.match(/code=([^&]*)/)[1] /* Set the code (used for exchanging accessToken) to the code parameter in the URL. The [1]
+      is because this throws and array and the data is in the second position*/
+    
+      const payload = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({
+          client_id: Spotify.clientId,
+          grant_type: 'authorization_code',
+          code: code,
+          redirect_uri: Spotify.redirectUri,
+          code_verifier: codeVerifier,
+        }),
+      }
+    
+      const body = await fetch("https://accounts.spotify.com/api/token", payload);
+      const response =await body.json();
+    
+      window.localStorage.setItem('access_token', response.access_token); //"creates" and accesstoken var in localStorage with the info from response.
+      window.localStorage.setItem('expires_in', response.expires_in);
+      window.localStorage.setItem('refresh_token', response.refresh_token);
     }
-    // stored in the previous step
-    const code = window.location.href.match(/code=([^&]*)/)[1]
-  
-    const payload = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        client_id: Spotify.clientId,
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: Spotify.redirectUri,
-        code_verifier: codeVerifier,
-      }),
-    }
-  
-    const body = await fetch("https://accounts.spotify.com/api/token", payload);
-    const response =await body.json();
-  
-    window.localStorage.setItem('access_token', response.access_token);
   },
   
   
   async search (term) {
-    
-    const accessToken = localStorage.getItem('access_token')
-    if(!accessToken){
-      await Spotify.getToken()
-    }
+    const codeVerifier = localStorage.getItem('code_verifier') //proxy for checking if user is authenticated IF not, then authenticate and return.
+    if(!codeVerifier){
+      await Spotify.authorization();
+      return;
+    } else { //If user is authenticated then get token and make the request
 
-    console.log({
-      newCode: window.location.href.match(/code=([^&]*)/)[1],
-      accessToken: localStorage.getItem('access_token'),
-      codeVer: window.localStorage.getItem('code_verifier'),
-      code: localStorage.getItem('code')
-    })
-    // let token = "BQB2oGMT1onoTdNvHqt8TqPX9UK0zlLNjC_8tgGFQqVPuzL9cSRQ4jQ05VmKMNkBpEvd9Nb_4rw_Cr93MhGbzbeaWdnAlIDFaBdE96WgQiIO506YVrU"
-    const response = await fetch(
-      `https://api.spotify.com/v1/search?q=${term}&type=track`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`
-        }
-      } 
-    )
-    const data = await response.json(); //.json (method of the response to a request with fetch()) -> takes json file and produces js object
-    return data.tracks.items.map(track => ({
-      id: track.id,
-      name: track.name,
-      artist: track.artists[0].name,
-      album: track.album.name,
-      uri: track.uri
-    }))
+      await Spotify.getToken(); //Await for funcion to get the accessToken
+
+      //This following lines are just for testing and debugging:
+      const expIn = localStorage.getItem('expires_in');
+      const refresh = localStorage.getItem('refresh_token')
+      console.log(`Token experies in ${expIn} and it's a ${typeof expIn} and refreshToken is ${refresh}`);
+      
+
+      
+      const response = await fetch(
+        `https://api.spotify.com/v1/search?q=${term}&type=track`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`
+          }
+        } 
+      )
+      const data = await response.json(); //.json (method of the request response with fetch()) -> takes json file and produces js object
+      return data.tracks.items.map(track => ({
+        id: track.id,
+        name: track.name,
+        artist: track.artists[0].name,
+        album: track.album.name,
+        uri: track.uri
+      }))
+    }   
   }
 }
 
