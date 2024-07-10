@@ -22,7 +22,7 @@ const Spotify = {
 
   clientId: 'b08373c1cede4b46b8b561613a17a67d',
   redirectUri: 'http://localhost:5173' || "http://localhost:3000", //not sure about this
- 
+  
   //Authorization generation
   async authorization () {
     const codeVerifier  = Spotify.generateRandomString(64);
@@ -41,14 +41,57 @@ const Spotify = {
       redirect_uri: Spotify.redirectUri,
     }
 
-    authUrl.search = new URLSearchParams(params).toString();
-    window.location.href = authUrl.toString(); //If I'm not mistaken, this two lines a. create a new URL and b. set the link to the link + response params (code)
+    authUrl.search = new URLSearchParams(params).toString(); /* 1. URLSearchParams() works with the query string (argument) 
+    it can take an object 2. the .toString() make it a string query 3. uthUrl.search = ...: This sets the search (query string) 
+    part of the authUrl object to the string representation of the query parameters */
+    window.location.href = authUrl.toString(); /* redirects to the new URL (the authUrl object turn into a the query string) */
   },
 
+  //Refresing the accessToken if experied
+  async getRefreshToken () {
+    
+    // refresh token that has been previously stored
+    const refreshToken = localStorage.getItem('refresh_token');
+    const url = "https://accounts.spotify.com/api/token"; //Can make this DRY with getToken too.
+  
+      const payload = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken,
+          client_id: Spotify.clientId
+        }),
+      }
+      const body = await fetch(url, payload);
+      const response = await body.json();
+  
+      window.localStorage.setItem('access_token', response.access_token); //"creates" and accesstoken var in localStorage with the info from response.
+      const experiesIn = (Date.now()  / 1000) + Number(response.expires_in)
+      window.localStorage.setItem('expires_in', experiesIn);
+      window.localStorage.setItem('refresh_token', response.refresh_token);
+  },
 
+  isTokenExperied(current, experies) { 
+    return current >= experies
+  },
+
+  //Requesting acessToken
   async getToken() {
-    if(localStorage.getItem('access_token')) {
-      return;
+    const accessToken = localStorage.getItem('access_token');
+    const experiesIn = localStorage.getItem("expires_in");
+    const currentTime = Date.now() / 1000;
+    const isExpired = Spotify.isTokenExperied(currentTime, experiesIn);
+
+    if(accessToken && experiesIn) { //in localStorage is an accessToken and experies_in variables
+      if(!isExpired) { //The token hasn't expired --> exit the function
+        return;
+      } else if(isExpired) { //The token IS expired --> request a new token and update localStorage
+        await Spotify.getRefreshToken( );
+        return;
+      }
     } else {
       const codeVerifier = localStorage.getItem('code_verifier') 
     
@@ -74,12 +117,13 @@ const Spotify = {
       const response =await body.json();
     
       window.localStorage.setItem('access_token', response.access_token); //"creates" and accesstoken var in localStorage with the info from response.
-      window.localStorage.setItem('expires_in', response.expires_in);
+      const experiesIn = (Date.now()  / 1000) + Number(response.expires_in)
+      window.localStorage.setItem('expires_in', experiesIn);
       window.localStorage.setItem('refresh_token', response.refresh_token);
     }
   },
   
-  
+  //Searchin for tracks
   async search (term) {
     const codeVerifier = localStorage.getItem('code_verifier') //proxy for checking if user is authenticated IF not, then authenticate and return.
     if(!codeVerifier){
@@ -91,8 +135,9 @@ const Spotify = {
 
       //This following lines are just for testing and debugging:
       const expIn = localStorage.getItem('expires_in');
-      const refresh = localStorage.getItem('refresh_token')
-      console.log(`Token experies in ${expIn} and it's a ${typeof expIn} and refreshToken is ${refresh}`);
+      const refresh = localStorage.getItem('refresh_token');
+      const token = localStorage.getItem('access_token')
+      console.log(`Token experies in ${expIn} and it's a ${typeof expIn} and refreshToken is ${refresh}. Token is${token}`);
       
 
       
@@ -113,8 +158,19 @@ const Spotify = {
       }))
     }   
   }
+
+
 }
 
 
 
 export default Spotify
+
+/*
+1. Have to make this DRY,
+2. Need to find a way to make a new function (or another method) that returns and accessToken. 
+  - If there is none then request one --> creates localStorage access_token -> returns token
+  - If there is one
+    -Its valid -> return localStorage access_token  -> return token
+    -It's expired -> refresh token -> update localStorage access_token -> returns token
+*/

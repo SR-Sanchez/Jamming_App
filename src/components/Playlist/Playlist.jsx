@@ -6,7 +6,7 @@ import TrackList from "../Tracklist/Tracklist";
 
 const Playlist = ({tracks, removeTrack}) => {
 
-	const [playlistName, setPlaylistName] = useState("New Playlist");
+	const [playlistName, setPlaylistName] = useState("New Playlist"); //Need to move this to App
 
 	const handlePlaylistName = ({target}) => {
 		setPlaylistName(target.value);

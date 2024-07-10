@@ -16,7 +16,9 @@ function App() {
 	};
 
   const handleSubmit = () => { 
-    Spotify.search(searchTerm).then(setSearchResults); //still don't quite understand the .then here. Need to study it more.
+    Spotify.search(searchTerm).then(setSearchResults); /*.then(setSearchResults) is a method that takes a callback 
+    function (setSearchResults in this case) that gets called when the promise resolves. The resolved value of the 
+    promise is passed as an argument to the callback function (setSearchResults) */
     setSearchTerm("")
   };
 
