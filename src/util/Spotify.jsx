@@ -44,16 +44,16 @@ const Spotify = {
     authUrl.search = new URLSearchParams(params).toString();
     window.location.href = authUrl.toString();
 
-    const urlParams = new URLSearchParams(window.location.search);
-    let code = urlParams.get('code');
-    window.localStorage.setItem('code', code)
+    // const urlParams = new URLSearchParams(window.location.search);
+    // let code = urlParams.get('code');
+    // window.localStorage.setItem('code', code)
   },
 
 
   async getToken() {
     const codeVerifier = localStorage.getItem('code_verifier')
     if(!codeVerifier){
-      Spotify.authorization()
+      await Spotify.authorization()
     }
     // stored in the previous step
     const code = window.location.href.match(/code=([^&]*)/)[1]
@@ -78,14 +78,12 @@ const Spotify = {
     window.localStorage.setItem('access_token', response.access_token);
   },
   
-  // checkCredentials () {
-
-  }
-
+  
   async search (term) {
+    
     const accessToken = localStorage.getItem('access_token')
     if(!accessToken){
-      Spotify.getToken()
+      await Spotify.getToken()
     }
 
     console.log({
