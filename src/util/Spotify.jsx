@@ -1,6 +1,9 @@
+const clientID = "b08373c1cede4b46b8b561613a17a67d";
+const redirectURI = 'http://localhost:5173';
+
 const Spotify = {
 
-//Code challenge generation
+//Code challenge generation functions --> Maybe make this another component a move it to a different folder
   generateRandomString(length){
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const values = crypto.getRandomValues(new Uint8Array(length));
@@ -20,9 +23,7 @@ const Spotify = {
       .replace(/\//g, '_');
   },
 
-  clientId: 'b08373c1cede4b46b8b561613a17a67d',
-  redirectUri: 'http://localhost:5173' || "http://localhost:3000", //not sure about this
-  
+
   //Authorization generation
   async authorization () {
     const codeVerifier  = Spotify.generateRandomString(64);
@@ -34,11 +35,11 @@ const Spotify = {
 
     const params =  {
       response_type: 'code',
-      client_id: Spotify.clientId,
+      client_id: clientID,
       scope: 'user-read-private user-read-email',
       code_challenge_method: 'S256',
       code_challenge: codeChallenge,
-      redirect_uri: Spotify.redirectUri,
+      redirect_uri: redirectURI,
     }
 
     authUrl.search = new URLSearchParams(params).toString(); /* 1. URLSearchParams() works with the query string (argument) 
@@ -65,7 +66,7 @@ const Spotify = {
       body: new URLSearchParams({
         grant_type: 'refresh_token',
         refresh_token: localStorage.getItem('refresh_token'),
-        client_id: Spotify.clientId
+        client_id: clientID
       }),
     }
 
@@ -73,9 +74,6 @@ const Spotify = {
     const response = await body.json();
     Spotify.updateLocalStorate(response);
   },
-
- 
-
 
 
   //Requesting acessToken
@@ -105,11 +103,11 @@ const Spotify = {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams({
-          client_id: Spotify.clientId,
+          client_id: clientID,
           grant_type: 'authorization_code',
           code: window.location.href.match(/code=([^&]*)/)[1], /* Set the code (used for exchanging accessToken) 
           to the code parameter in the URL. The [1] is because this throws and array and the data is in the second position*/
-          redirect_uri: Spotify.redirectUri,
+          redirect_uri: redirectURI,
           code_verifier: localStorage.getItem('code_verifier'),
         }),
       }
