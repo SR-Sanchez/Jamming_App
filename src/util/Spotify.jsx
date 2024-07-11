@@ -110,8 +110,69 @@ const Spotify = {
         uri: track.uri
       }))
     }   
-  }
+  },
 
+  async createPlaylist(playlistName, tracks) { //Should pass: 1. String 2. An array with strings (each one a song uri)
+    if(tracks.length < 1) {
+      return;
+    }
+
+    const accessToken = await Spotify.getToken();
+    //Get current user --> userId
+    const userResponse = await fetch(
+      `https://api.spotify.com/v1/me`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      } 
+    );
+    const userData = await userResponse.json();
+    const userId = userData.id; 
+    window.localStorage.setItem("user_id", userId); //don't know if a should just give a variable the userId ()
+    
+    //Creating a Playlist
+    const playlistPayload = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ //This converts the body into a JSON string (DON'T forget to use it, I was having troubles with this) 
+        name: playlistName, 
+        description: "New playlist description",
+        public: false
+      })
+    };
+    const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistPayload);
+    const playlistData = await playlistResponse.json();
+    const playlistId = playlistData.id;
+
+    console.log(`Playlist id is ${playlistId}`)
+  
+    //Adding tracks to the playlist
+  
+    const playlistTracksPayload = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        uris: tracks, /* 1. I think this will have to be with useState
+                     2. It's an array of strings, in this case uris (each one being a track E.g.: 
+                     "spotify:track:11dFghVXANMlKmJXsNCbNl")
+                     
+        */
+        position: 0
+      })
+    }
+    
+    await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, playlistTracksPayload);
+    console.log({
+      body: JSON.stringify({
+        uris: ["spotify:track:13pAdf2r1m73gZY3OPWSE2","spotify:track:4fsQxqvqnktppKQsuDEICS"]
+    })})
+  }
 
 }
 

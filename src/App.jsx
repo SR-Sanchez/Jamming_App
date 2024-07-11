@@ -8,18 +8,21 @@ import { useState, useCallback } from 'react';
 function App() {
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchResults, setSearchResults] = useState([])
+  const [searchResults, setSearchResults] = useState([]); //Maybe it's unnecessary to use useState
   const [playlistTracks, setplaylistTracks] = useState([]);
+  const [playlistName, setPlaylistName] = useState("New playlist");
 
 	const handleTermSearch = event => {
 		setSearchTerm(event.target.value)
 	};
 
   const handleSubmit = () => { 
-    Spotify.search(searchTerm).then(setSearchResults); /*.then(setSearchResults) is a method that takes a callback 
+    if(searchTerm) {
+      Spotify.search(searchTerm).then(setSearchResults); /*.then(setSearchResults) is a method that takes a callback 
     function (setSearchResults in this case) that gets called when the promise resolves. The resolved value of the 
     promise is passed as an argument to the callback function (setSearchResults) */
     setSearchTerm("")
+    }
   };
 
   
@@ -37,13 +40,24 @@ function App() {
       prevTracks.filter((currentTrack) => currentTrack.id !== track.id))
   }, []) //for a reason I don't quite understand, there's no need for dependencies
   
+  const handlePlaylistName = ({target}) => {
+		setPlaylistName(target.value);
+	};
+  
+  const savePlaylist = () => {
+    const uriArray = playlistTracks.map((track) => track.uri);
+    Spotify.createPlaylist(playlistName, uriArray);
+    setPlaylistName("New playlist");
+    setplaylistTracks([]);
+  };
+
   return (
     <>
       <header> <h1>Ja<span id="ms">mmm</span>ing</h1> </header>
       <SearchBar searchTerm={searchTerm} handleTermSearch={handleTermSearch} handleSubmit={handleSubmit}></SearchBar>
       <section id="main-container">
         <SearchResults tracks={searchResults} addTrack={addTrack}/>
-        <Playlist tracks={playlistTracks} removeTrack={removeTrack}/>
+        <Playlist tracks={playlistTracks} removeTrack={removeTrack} handlePlaylistName={handlePlaylistName} playlistName={playlistName} savePlaylist={savePlaylist}/>
       </section>
     </>
   )

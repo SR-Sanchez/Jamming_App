@@ -30,6 +30,7 @@ const TrackList = ({tracks, addTrack, displayButton, removeTrack}) => {
 							name={track.name}
 							artist={track.artist}
 							key={track.id}
+							uri={track.uri}
 							id={track.id}
 							addTrack={addTrack}
 							displayButton={displayButton}
