@@ -1,52 +1,9 @@
+import Authorize from "./Authorize";
+
 const clientID = "b08373c1cede4b46b8b561613a17a67d";
 const redirectURI = 'http://localhost:5173';
 
 const Spotify = {
-
-//Code challenge generation functions --> Maybe make this another component a move it to a different folder
-  generateRandomString(length){
-    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    const values = crypto.getRandomValues(new Uint8Array(length));
-    return values.reduce((acc, x) => acc + possible[x % possible.length], "");
-  },
-  
-  async sha256 (plain) {
-    const encoder = new TextEncoder()
-    const data = encoder.encode(plain)
-    return window.crypto.subtle.digest('SHA-256', data)
-  },
-
-  base64encode (input) {
-    return btoa(String.fromCharCode(...new Uint8Array(input)))
-      .replace(/=/g, '')
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_');
-  },
-
-
-  //Authorization generation
-  async authorization () {
-    const codeVerifier  = Spotify.generateRandomString(64);
-    const hashed = await Spotify.sha256(codeVerifier)
-    const codeChallenge = Spotify.base64encode(hashed);
-    const authUrl = new URL("https://accounts.spotify.com/authorize")
-
-    window.localStorage.setItem('code_verifier', codeVerifier);
-
-    const params =  {
-      response_type: 'code',
-      client_id: clientID,
-      scope: 'user-read-private user-read-email',
-      code_challenge_method: 'S256',
-      code_challenge: codeChallenge,
-      redirect_uri: redirectURI,
-    }
-
-    authUrl.search = new URLSearchParams(params).toString(); /* 1. URLSearchParams() works with the query string (argument) 
-    it can take an object 2. the .toString() make it a string query 3. uthUrl.search = ...: This sets the search (query string) 
-    part of the authUrl object to the string representation of the query parameters */
-    window.location.href = authUrl.toString(); /* redirects to the new URL (the authUrl object turn into a the query string) */
-  },
 
   updateLocalStorate(response) {
     window.localStorage.setItem('access_token', response.access_token); //"creates" and accesstoken var in localStorage with the info from response.
@@ -95,8 +52,7 @@ const Spotify = {
         return localStorage.getItem('access_token'); //Not sure if I can just call accessToken and it would be updated.
       }
     } else {  
-      // stored in the previous authorization
-     
+
       const payload = {
         method: 'POST',
         headers: {
@@ -124,7 +80,7 @@ const Spotify = {
   async search (term) {
     const codeVerifier = localStorage.getItem('code_verifier') //proxy for checking if user is authenticated IF not, then authenticate and return.
     if(!codeVerifier){
-      await Spotify.authorization();
+      await Authorize.authorization(clientID, redirectURI);
       return;
     } else { //If user is authenticated then get token and make the request
 
@@ -162,12 +118,3 @@ const Spotify = {
 
 
 export default Spotify
-
-/*
-1. Have to make this DRY,
-2. Need to find a way to make a new function (or another method) that returns and accessToken. 
-  - If there is none then request one --> creates localStorage access_token -> returns token
-  - If there is one
-    -Its valid -> return localStorage access_token  -> return token
-    -It's expired -> refresh token -> update localStorage access_token -> returns token
-*/
