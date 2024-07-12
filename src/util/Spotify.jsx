@@ -80,7 +80,7 @@ const Spotify = {
   
   //Searchin for tracks
   async search (term) {
-    const isAuthorized = window.location.href.match(/code=([^&]*)/);
+    const isAuthorized = window.location.href.match(/code=([^&]*)/); //looks for params in link,
     if(!isAuthorized){
       await Authorize.authorization(clientID, redirectURI);
       return;
