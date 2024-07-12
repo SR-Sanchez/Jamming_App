@@ -1,7 +1,9 @@
 import Authorize from "./Authorize";
 
 const clientID = "b08373c1cede4b46b8b561613a17a67d";
-const redirectURI = 'http://localhost:5173';
+const redirectURI = import.meta.env.MODE === "development" ?'http://localhost:5173': 'https://main--sergiojamming.netlify.app/';  /*this function
+reads if it's on run npm dev (developer mode) or in other mode. If it's in build it will return the netlify address.
+ */
 
 const Spotify = {
 
