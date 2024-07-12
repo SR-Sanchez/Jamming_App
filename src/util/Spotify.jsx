@@ -80,8 +80,8 @@ const Spotify = {
   
   //Searchin for tracks
   async search (term) {
-    const codeVerifier = localStorage.getItem('code_verifier') //proxy for checking if user is authenticated IF not, then authenticate and return.
-    if(!codeVerifier){
+    const isAuthorized = window.location.href.match(/code=([^&]*)/);
+    if(!isAuthorized){
       await Authorize.authorization(clientID, redirectURI);
       return;
     } else { //If user is authenticated then get token and make the request
