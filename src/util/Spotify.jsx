@@ -148,8 +148,6 @@ const Spotify = {
     const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistPayload);
     const playlistData = await playlistResponse.json();
     const playlistId = playlistData.id;
-
-    console.log(`Playlist id is ${playlistId}`)
   
     //Adding tracks to the playlist
   
@@ -160,20 +158,13 @@ const Spotify = {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        uris: tracks, /* 1. I think this will have to be with useState
-                     2. It's an array of strings, in this case uris (each one being a track E.g.: 
-                     "spotify:track:11dFghVXANMlKmJXsNCbNl")
-                     
-        */
+        uris: tracks,
         position: 0
       })
     }
     
     await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, playlistTracksPayload);
-    console.log({
-      body: JSON.stringify({
-        uris: ["spotify:track:13pAdf2r1m73gZY3OPWSE2","spotify:track:4fsQxqvqnktppKQsuDEICS"]
-    })})
+    
   }
 
 }
