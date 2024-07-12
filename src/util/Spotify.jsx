@@ -140,6 +140,7 @@ const Spotify = {
     const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistPayload);
     const playlistData = await playlistResponse.json();
     const playlistId = playlistData.id;
+    
   
     //Adding tracks to the playlist
   
