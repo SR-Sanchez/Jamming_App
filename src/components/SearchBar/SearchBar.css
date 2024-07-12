@@ -28,3 +28,15 @@ button {
 	/* min-width: 100px; */
 	color: rgb(56, 47, 85)
 }
+
+button:hover {
+	background-color: #7672c5;
+	/* transform: translateY(-0.5px); */
+  /* box-shadow: 0 10px 20px rgba(155, 71, 71, 0.2); */
+}
+
+button:active {
+	background-color: #605cb9;
+	transform: translateY(0.5px);
+  box-shadow: 0 10px 20px #81121228;
+}
