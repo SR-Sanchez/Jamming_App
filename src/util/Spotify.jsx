@@ -87,15 +87,7 @@ const Spotify = {
     } else { //If user is authenticated then get token and make the request
 
       const accessToken = await Spotify.getToken(); //Should return accessToken always
-
-    //These following lines are just for testing and debugging:
-      const expIn = localStorage.getItem('expires_in');
-      const refresh = localStorage.getItem('refresh_token');
-      const token = localStorage.getItem('access_token')
-      console.log(`Token experies in ${expIn} and it's a ${typeof expIn} and refreshToken is ${refresh}. Token is${token}`);
-      
-
-      
+        
       const response = await fetch(
         `https://api.spotify.com/v1/search?q=${term}&type=track`, {
           headers: {
@@ -148,8 +140,6 @@ const Spotify = {
     const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistPayload);
     const playlistData = await playlistResponse.json();
     const playlistId = playlistData.id;
-
-    console.log(`Playlist id is ${playlistId}`)
   
     //Adding tracks to the playlist
   
@@ -160,20 +150,13 @@ const Spotify = {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        uris: tracks, /* 1. I think this will have to be with useState
-                     2. It's an array of strings, in this case uris (each one being a track E.g.: 
-                     "spotify:track:11dFghVXANMlKmJXsNCbNl")
-                     
-        */
+        uris: tracks,
         position: 0
       })
     }
     
     await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, playlistTracksPayload);
-    console.log({
-      body: JSON.stringify({
-        uris: ["spotify:track:13pAdf2r1m73gZY3OPWSE2","spotify:track:4fsQxqvqnktppKQsuDEICS"]
-    })})
+    
   }
 
 }
