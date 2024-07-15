@@ -3,6 +3,7 @@ import Playlist from './components/Playlist/Playlist';
 import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
 import Spotify from './util/Spotify';
+import WebPlayer from './components/WebPlayer/WebPlayer';
 import { useState, useCallback } from 'react';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]); //Maybe it's unnecessary to use useState
   const [playlistTracks, setplaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("New playlist");
+  // const [playlistID, setPlaylistID] = useState("")
 
 	const handleTermSearch = event => {
 		setSearchTerm(event.target.value)
@@ -59,6 +61,7 @@ function App() {
         <SearchResults tracks={searchResults} addTrack={addTrack}/>
         <Playlist tracks={playlistTracks} removeTrack={removeTrack} handlePlaylistName={handlePlaylistName} playlistName={playlistName} savePlaylist={savePlaylist}/>
       </section>
+      <WebPlayer/>
     </>
   )
 }

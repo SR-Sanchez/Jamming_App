@@ -57,3 +57,10 @@
 	margin-right: 16px;
 	justify-content:center;
 }
+
+.web-player {
+  display: flex;
+	max-width: 648px;
+  margin: auto;
+  /* border-radius: 4px */
+}
