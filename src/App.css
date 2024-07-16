@@ -62,5 +62,9 @@
   display: flex;
 	max-width: 648px;
   margin: auto;
-  /* border-radius: 4px */
+  background-color: aliceblue;
+  border-radius: 4px;
+  background-color: rgba(26, 6, 52, 0.95);
+	color:rgb(206, 200, 224);
+  justify-content: center;
 }

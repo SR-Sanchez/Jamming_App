@@ -5,11 +5,14 @@
 	width: 360px;
 	margin: 8px;
 	border-radius: 4px;
+	overflow-x: scroll;
+  max-height: 400px;
 }
 
 .results-container h2 {
 	margin: 0;
 	font-weight: 600;
-	color:rgb(245, 245, 246)
+	color:rgb(245, 245, 246);
+	position: sticky;
 }
 

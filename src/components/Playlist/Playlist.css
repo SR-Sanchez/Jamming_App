@@ -6,6 +6,8 @@
 	margin: 8px;
 	margin-left: 12px;
 	border-radius: 4px;
+	overflow-x: scroll;
+  max-height: 400px;
 }
 
 .playlist input{

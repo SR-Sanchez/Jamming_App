@@ -61,11 +61,11 @@ function App() {
     <>
       <header> <h1>Ja<span id="ms">mmm</span>ing</h1> </header>
       <SearchBar searchTerm={searchTerm} handleTermSearch={handleTermSearch} handleSubmit={handleSubmit}></SearchBar>
+      <WebPlayer playlistID={playlistID}/>
       <section id="main-container">
         <SearchResults tracks={searchResults} addTrack={addTrack}/>
         <Playlist tracks={playlistTracks} removeTrack={removeTrack} handlePlaylistName={handlePlaylistName} playlistName={playlistName} savePlaylist={savePlaylist}/>
       </section>
-      <WebPlayer playlistID={playlistID}/>
     </>
   )
 }
