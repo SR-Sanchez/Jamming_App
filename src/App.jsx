@@ -12,7 +12,7 @@ function App() {
   const [searchResults, setSearchResults] = useState([]); //Maybe it's unnecessary to use useState
   const [playlistTracks, setplaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("New playlist");
-  // const [playlistID, setPlaylistID] = useState("")
+  const [playlistID, setPlaylistID] = useState("")
 
 	const handleTermSearch = event => {
 		setSearchTerm(event.target.value)
@@ -53,6 +53,10 @@ function App() {
     setplaylistTracks([]);
   };
 
+  window.onstorage = () => {  //Listens for changes in localStorage, so it can update link in WebPlayer component
+    setPlaylistID(localStorage.getItem("playlist_id"))
+  }
+
   return (
     <>
       <header> <h1>Ja<span id="ms">mmm</span>ing</h1> </header>
@@ -61,7 +65,7 @@ function App() {
         <SearchResults tracks={searchResults} addTrack={addTrack}/>
         <Playlist tracks={playlistTracks} removeTrack={removeTrack} handlePlaylistName={handlePlaylistName} playlistName={playlistName} savePlaylist={savePlaylist}/>
       </section>
-      <WebPlayer/>
+      <WebPlayer playlistID={playlistID}/>
     </>
   )
 }

@@ -1,7 +1,10 @@
+/* eslint-disable react/prop-types */
 // import Playlist from "../Playlist/Playlist";
 
-const WebPlayer = () => {
-	let playlistID = localStorage.getItem("playlist_id")
+const WebPlayer = ({playlistID}) => {
+	// let playlistID = localStorage.getItem("playlist_id");
+
+
 	const link = `https://open.spotify.com/embed/playlist/${playlistID}?utm_source=generator&theme=0`
 
 	return (

@@ -140,7 +140,8 @@ const Spotify = {
     const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistPayload);
     const playlistData = await playlistResponse.json();
     const playlistId = playlistData.id;
-    window.localStorage.setItem("playlist_id", playlistId)
+    window.localStorage.setItem("playlist_id", playlistId); //This two lines are needed for the WebPlayer component to get playlistID
+    window.dispatchEvent(new Event("storage")); // This creates a new event in localStorage, needed for App component to update playlistID prompt
   
     //Adding tracks to the playlist
   
