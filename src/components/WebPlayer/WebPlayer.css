@@ -1,3 +1,8 @@
 .placeHolder {
 	background-color: azure;
 }
+
+.sizeButton {
+	margin: auto;
+	/* position: absolute; */
+}

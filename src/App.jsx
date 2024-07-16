@@ -12,7 +12,8 @@ function App() {
   const [searchResults, setSearchResults] = useState([]); //Maybe it's unnecessary to use useState
   const [playlistTracks, setplaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("New playlist");
-  const [playlistID, setPlaylistID] = useState("")
+  const [playlistID, setPlaylistID] = useState("");
+  const [playerSize, setPlayerSize] = useState({display: true, size: 152});
 
 	const handleTermSearch = event => {
 		setSearchTerm(event.target.value)
@@ -57,11 +58,15 @@ function App() {
     setPlaylistID(localStorage.getItem("playlist_id"))
   }
 
+  const handleSize = () => {
+    playerSize.display ? setPlayerSize({display: false, size: 352}) : setPlayerSize({display: true, size: 152})
+  }
+
   return (
     <>
       <header> <h1>Ja<span id="ms">mmm</span>ing</h1> </header>
       <SearchBar searchTerm={searchTerm} handleTermSearch={handleTermSearch} handleSubmit={handleSubmit}></SearchBar>
-      <WebPlayer playlistID={playlistID}/>
+      <WebPlayer playlistID={playlistID} handleSize={handleSize} playerSize={playerSize}/>
       <section id="main-container">
         <SearchResults tracks={searchResults} addTrack={addTrack}/>
         <Playlist tracks={playlistTracks} removeTrack={removeTrack} handlePlaylistName={handlePlaylistName} playlistName={playlistName} savePlaylist={savePlaylist}/>
