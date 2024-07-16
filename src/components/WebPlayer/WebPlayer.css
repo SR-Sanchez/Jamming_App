@@ -1,8 +1,22 @@
-.placeHolder {
-	background-color: azure;
+.web-player-placeholder {
+  display: flex;
+	max-width: 648px;
+  margin: auto;
+  background-color: aliceblue;
+  border-radius: 4px;
+  background-color: rgba(26, 6, 52, 0.95);
+	color:rgb(206, 200, 224);
+  justify-content: center;
 }
 
-.sizeButton {
-	margin: auto;
-	/* position: absolute; */
+.web-player {
+  max-width: 648px;
+  margin: auto;
+  border-radius: 4px;
+  background-color: rgba(22, 6, 42, 0.821);
+	color:rgb(206, 200, 224);
+}
+
+#sizeButton {
+	position: absolute;
 }

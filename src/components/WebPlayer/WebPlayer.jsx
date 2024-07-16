@@ -7,9 +7,8 @@ const WebPlayer = ({playlistID, playerSize, handleSize}) => {
  
 	return playlistID ? (
     <>
-      
       <section className='web-player'>
-        <button id="sizeButton" onClick={handleSize}>Change size</button>
+        <button id="sizeButton" onClick={handleSize}>resize</button>
         <iframe 
         title="NewPlay"
         style={{ borderRadius: 12}}
@@ -26,7 +25,7 @@ const WebPlayer = ({playlistID, playerSize, handleSize}) => {
 		
 	) : (
   
-    <section className='web-player'>
+    <section className='web-player-placeholder'>
       <h2>Your Playlist will display here</h2>
     </section>
   )
