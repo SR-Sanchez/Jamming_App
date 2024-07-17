@@ -13,6 +13,7 @@ Jammming_App allows you to search for songs, add and remove songs to a new playl
 - Search for songs
 - Add and remove songs to a new playlist
 - Save the new playlist to your Spotify account
+- Error pop-up notitication with react-toastyfy
 - Embedded Spotify player:
    - Play songs (requires Spotify Premium)
    - Choose between compact and normal sizes

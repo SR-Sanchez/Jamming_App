@@ -95,7 +95,7 @@ const Spotify = {
       const accessToken = await Spotify.getToken(); //Should return accessToken always
         
       const response = await fetch(
-        `https://api.spotify.com/v1/search?q=${term}&type=track`, {
+        `https://api.spotify.com/v1/search?q=${term}&type=album%2Cartist%2Ctrack`, {
           headers: {
             Authorization: `Bearer ${accessToken}` 
           }
