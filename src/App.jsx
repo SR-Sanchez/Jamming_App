@@ -4,16 +4,39 @@ import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
 import Spotify from './util/Spotify';
 import WebPlayer from './components/WebPlayer/WebPlayer';
-import { useState, useCallback } from 'react';
+import { Flip, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useState, useCallback, useEffect } from 'react';
 
 function App() {
 
+  const [errorParams, setErrorParmas] = useState("")
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]); //Maybe it's unnecessary to use useState
   const [playlistTracks, setplaylistTracks] = useState([]);
   const [playlistName, setPlaylistName] = useState("New playlist");
   const [playlistID, setPlaylistID] = useState("");
   const [playerSize, setPlayerSize] = useState({display: true, size: 152});
+
+  useEffect(() => {
+    const url = window.location.search;
+    const urlParams = new URLSearchParams(url);
+    const error = urlParams.get('error');
+    setErrorParmas(error)
+    if(errorParams){
+      toast.error(errorParams, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Flip,
+      });
+    }
+  }, [errorParams])
 
 	const handleTermSearch = event => {
 		setSearchTerm(event.target.value)
