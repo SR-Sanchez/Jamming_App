@@ -1,4 +1,5 @@
 import Authorize from "./Authorize";
+import handleError from "./ErrorHandler";
 
 const clientID = "b08373c1cede4b46b8b561613a17a67d";
 const redirectURI = import.meta.env.MODE === "development" ?'http://localhost:5173': 'https://main--sergiojamming.netlify.app/';  /*this function
@@ -31,7 +32,7 @@ const Spotify = {
 
     const body = await fetch(url, payload);
     const response = await body.json();
-    Spotify.updateLocalStorate(response);
+    return response.error ? handleError(response) : Spotify.updateLocalStorate(response); //This hasn't been tested.
   },
 
 
@@ -72,9 +73,13 @@ const Spotify = {
     
       const body = await fetch(url, payload);
       const response =await body.json();
-      Spotify.updateLocalStorate(response);
-    
-      return localStorage.getItem('access_token');
+      if(response.error) {
+        handleError(response);
+        return;
+      } else {
+        Spotify.updateLocalStorate(response);
+        return localStorage.getItem('access_token');
+      }
     }
   },
   
@@ -91,19 +96,20 @@ const Spotify = {
       const response = await fetch(
         `https://api.spotify.com/v1/search?q=${term}&type=track`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`
+            Authorization: `Bearer ${accessToken}` 
           }
         } 
       )
       const data = await response.json(); //.json (method of the request response with fetch()) -> takes json file and produces js object
-      return data.tracks.items.map(track => ({
-        id: track.id,
-        name: track.name,
-        artist: track.artists[0].name,
-        album: track.album.name,
-        uri: track.uri
-      }))
-    }   
+      return data.error ? handleError(data) : //If there is response contains an error, handle it, else display results
+        data.tracks.items.map(track => ({
+          id: track.id,
+          name: track.name,
+          artist: track.artists[0].name,
+          album: track.album.name,
+          uri: track.uri
+        }))
+      }
   },
 
   async createPlaylist(playlistName, tracks) { //Should pass: 1. String 2. An array with strings (each one a song uri)
@@ -121,6 +127,12 @@ const Spotify = {
       } 
     );
     const userData = await userResponse.json();
+
+    if(userData.error) {
+      handleError(userData);
+      return;
+    }
+
     const userId = userData.id; 
     window.localStorage.setItem("user_id", userId); //don't know if a should just give a variable the userId ()
     
@@ -139,6 +151,12 @@ const Spotify = {
     };
     const playlistResponse = await fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, playlistPayload);
     const playlistData = await playlistResponse.json();
+
+    if(playlistData.error) {
+      handleError(playlistData);
+      return;
+    }
+
     const playlistId = playlistData.id;
     window.localStorage.setItem("playlist_id", playlistId); //This two lines are needed for the WebPlayer component to get playlistID
     window.dispatchEvent(new Event("storage")); // This creates a new event in localStorage, needed for App component to update playlistID prompt
