@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import Authorize from "./Authorize";
 import handleError from "./ErrorHandler";
 
@@ -175,7 +176,9 @@ const Spotify = {
       })
     }
     
-    await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, playlistTracksPayload);
+    const playlist = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, playlistTracksPayload);
+    const response = await playlist.json();
+    response ? handleError(response) : toast.info("Playlist created!")
     
   }
 
