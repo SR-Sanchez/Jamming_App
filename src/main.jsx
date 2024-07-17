@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import { ToastContainer } from 'react-toastify';
+import { Slide, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './index.css'
 
@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ToastContainer
         position="top-right"
         autoClose={5000}
-        hideProgressBar
+        hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
@@ -19,7 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         draggable
         pauseOnHover
         theme="dark"
-        transition: Bounce
+        transition={Slide}
         />
   </React.StrictMode>,
 )

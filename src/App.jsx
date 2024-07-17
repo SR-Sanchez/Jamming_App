@@ -4,7 +4,7 @@ import SearchBar from './components/SearchBar/SearchBar';
 import SearchResults from './components/SearchResults/SearchResults';
 import Spotify from './util/Spotify';
 import WebPlayer from './components/WebPlayer/WebPlayer';
-import { Flip, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useCallback, useEffect } from 'react';
 
@@ -18,23 +18,13 @@ function App() {
   const [playlistID, setPlaylistID] = useState("");
   const [playerSize, setPlayerSize] = useState({display: true, size: 152});
 
-  useEffect(() => {
+  useEffect(() => { //Takes url and search for a parameter called "error". If found throw notification
     const url = window.location.search;
     const urlParams = new URLSearchParams(url);
     const error = urlParams.get('error');
     setErrorParmas(error)
     if(errorParams){
-      toast.error(errorParams, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Flip,
-      });
+      toast.error(errorParams);
     }
   }, [errorParams])
 
